@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Reservation Form</title>
+    <link rel="stylesheet" href="../style/yoyaku.css">
+</head>
+
+<body>
+    <header>
+        <div>日本酒・おでん　陽</div>
+        <div id="welcome"></div>
+    </header>
+    <section>
+        <div class="card">
+            <div class="cart" style="width: 60%;">
+                <div class="title">
+                    <div style="font-size: 1.5rem;">日本酒・おでん　陽</div>
+                    <div class="p-color" id="allProduct"></div>
+                </div>
+                <div id="showProduct"></div>
+                <div class="back-to-shop">
+                    <a href="menu.html" class="p-color">
+                        &leftarrow;
+                        Back to shop
+                    </a>
+                </div>
+            </div>
+            <div class="summary">
+                <div style="font-size: 1.25rem; margin-top: 23px; margin-bottom: 8px;">サンキュー</div>
+                <hr>
+                <form>
+                    <label for="firstName">FIRST NAME</label><br>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <label for="lastName">LAST NAME</label><br>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <label for="phoneNumber">電話番号</label><br>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                    <label for="reservationDate">予約日時</label>
+                    <input type="date" id="reservationDate" name="reservationDate" required>
+                    <label>COUPON</label>
+                    <input id="code" placeholder="Enter your code" style="margin-bottom: 23px;">
+                </form>
+                <div class="title" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0; margin: 0;">
+                    <div>会計</div>
+                    <div id="money">&yen; </div>
+                </div>
+                <button class="button" onclick=xacNhan()>予約</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <h2>ご案内</h2>
+        <div>
+            <p>
+                営業日・営業時間<br>
+                テイクアウト※事前にお電話ください<br>
+                日曜日 12:00〜<br>
+                月曜日〜土曜日 16:00〜<br>
+                ご飲食<br>
+                月曜日から土曜日 17:00〜23:00（L.o.22:30）<br>
+                日曜日 12:00〜21:00（L.o.20:30）<br>
+                <br>
+                不定休となり、そのほかに年末年始、夏休みを頂戴することがございます。詳細はInstagramや公式LINEにてご確認のほどよろしくお願いいたします。<br>
+
+            </p>
+            <a href="https://instagram.com/odenya_yoo/" target="_blank"><img src="style/insta.jpg" alt=""></a>
+        </div>
+    </footer>
+    <div style="text-align: center; margin-top: 80px;">
+        <p>場所</p>
+        <p style="font-size: 16px; margin-top: 20px; margin-bottom: 40px;">
+            〒545-0037 大阪市阿倍野区帝塚山1−14−13<br>
+            ℡ 06−6606−8393 <br>
+            代表：金子 洋亮<br>
+            -最寄駅-<br>
+            南海高野線「帝塚山駅」徒歩7分<br>
+            阪堺電気軌道上町線「姫松駅」徒歩3分<br>
+        </p>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.179269139087!2d135.49711077579005!3d34.62490977294677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000dd77226b0173%3A0xe3416192c2983ebe!2z6Zm9!5e0!3m2!1svi!2sjp!4v1700207058249!5m2!1svi!2sjp"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <script>
+        let checkLogin = localStorage.getItem("idUser");
+        let userName = JSON.parse(localStorage.getItem("userobj")) || [];
+        if (!checkLogin) {
+            window.location.href = 'login.html';
+        }
+        document.getElementById("welcome").innerHTML =
+            `ようこそ ${checkLogin} 様`;
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        function cart() {
+            for (let i = 0; i < userName.length; i++) {
+                if (userName[i].id == checkLogin) {
+                    let text = "";
+                    let pay = 0;
+                    for (let index = 0; index < userName[i].cart.length; index++) {
+                        pay += +userName[i].cart[index].soLuong * userName[i].cart[index].price;
+                        text +=
+                            `
+                        <div class="showDetail">
+                            <div style="width: 85px"><img src=${userName[i].cart[index].image}></div>
+                            <div style="width: 150px; padding-left: 12px;">
+                                <div class="p-color">${userName[i].cart[index].danhMuc}</div>
+                                <div>${userName[i].cart[index].name}</div>
+                            </div>
+                            <div style="flex-grow: 1;">
+                                <a onclick=decrease(${userName[i].cart[index].id})>-</a><span class="border">${userName[i].cart[index].soLuong} items</span><a onclick=increase(${userName[i].cart[index].id})>+</a>
+                            </div>
+                            <div style="flex-grow: 1;">
+                                <div>${userName[i].cart[index].soLuong * userName[i].cart[index].price} &yen;<span class="close p-color" onclick="confirmDelete(${userName[i].cart[index].id})">&#10005;</span></div>
+                            </div>
+                        </div>
+                        `
+                    }
+                    document.getElementById("showProduct").innerHTML = text;
+                    document.getElementById("money").innerHTML = pay + "&yen;";
+                    document.getElementById("allProduct").innerText = userName[i].cart.length;
+
+                    document.getElementById("firstName").value = users[i].fname;
+                    document.getElementById("lastName").value = users[i].lname;
+                    document.getElementById("phoneNumber").value = users[i].phone;
+                }
+            }
+        }
+        function decrease(idProduct) {
+            for (let i = 0; i < userName.length; i++) {
+                if (userName[i].id == checkLogin) {
+                    for (let j = 0; j < userName[i].cart.length; j++) {
+                        if (userName[i].cart[j].id == idProduct) {
+                            userName[i].cart[j].soLuong = --userName[i].cart[j].soLuong;
+                            localStorage.setItem("userobj", JSON.stringify(userName));
+                            cart();
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        function increase(idProduct) {
+            for (let i = 0; i < userName.length; i++) {
+                if (userName[i].id == checkLogin) {
+                    for (let j = 0; j < userName[i].cart.length; j++) {
+                        if (userName[i].cart[j].id == idProduct) {
+                            userName[i].cart[j].soLuong = ++userName[i].cart[j].soLuong;
+                            localStorage.setItem("userobj", JSON.stringify(userName));
+                            cart();
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        function removeItemFromCart(idProduct) {
+            for (let i = 0; i < userName.length; i++) {
+                if (userName[i].id == checkLogin) {
+                    for (let j = 0; j < userName[i].cart.length; j++) {
+                        if (userName[i].cart[j].id == idProduct) {
+                            const priceOfRemovedItem = userName[i].cart[j].soLuong * userName[i].cart[j].price;
+                            userName[i].cart.splice(j, 1);
+                            localStorage.setItem("userobj", JSON.stringify(userName));
+                            updateTotal(-priceOfRemovedItem);
+                            cart();
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        function confirmDelete(idProduct) {
+            if (confirm("キャンセルしたいですか？")) {
+                removeItemFromCart(idProduct);
+            }
+        }
+        function updateTotal(removedPrice) {
+            const payElement = document.getElementById("money");
+            const currentTotal = parseFloat(payElement.innerHTML.replace(/\D/g, ''));
+            const newTotal = currentTotal - removedPrice;
+            payElement.innerHTML = newTotal;
+        }
+
+        function xacNhan() {
+            let firstName = document.getElementById("firstName").value;
+            let lastName = document.getElementById("lastName").value;
+            let phone = document.getElementById("phoneNumber").value;
+            let reservationDate = document.getElementById("reservationDate").value;
+
+            for (let i = 0; i < userName.length; i++) {
+                if (userName[i].id == checkLogin) {
+                    let newReservation = {
+                        name: firstName + lastName,
+                        phone: phone,
+                        date: reservationDate,
+                        items: userName[i].cart
+                    }
+                    userName[i].yoyaku.push(newReservation);
+                    userName[i].cart = []; //xóa sản phẩm trong giỏ hàng để mua lần sau
+                    localStorage.setItem("userobj", JSON.stringify(userName));
+                }
+            }
+            window.location.href = "../index_customer.html";
+        }
+        cart();
+    </script>
+</body>
+
+</html>

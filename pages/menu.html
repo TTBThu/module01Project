@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Customer Home</title>
+    <style>
+        p {
+            font-size: 18px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .review1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 0 auto;
+            padding: 225px;
+            text-align: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .review1 h1 {
+            font-size: 64px;
+        }
+
+        .review2 {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 40px auto;
+        }
+
+        .review2 .detail {
+            width: 400px;
+            background-color: #333333;
+            color: white;
+        }
+
+        .detail img {
+            max-width: 100%;
+        }
+
+        .detail h3 {
+            font-size: 24px;
+            margin: 20px;
+        }
+
+        .detail p {
+            font-size: 16px;
+            margin: 20px;
+        }
+
+        .review3 {
+            background-color: rgb(51, 51, 51);
+            margin: 0 auto;
+            padding: 60px;
+            color: #e6e7f0;
+        }
+
+        .review3 h2 {
+            font-size: 48px;
+            padding: 20px 0;
+            margin-left: 50px;
+        }
+
+        .review3 div {
+            border-top: 1px solid #e6e7f0;
+            display: flex;
+            flex-direction: row;
+            padding: 10px 0;
+            margin-left: 50px;
+
+        }
+
+        .review3 div p {
+            width: 565px;
+            padding-top: 20px;
+            padding-right: 15px;
+            flex-grow: 1;
+        }
+
+        .review3 div a {
+            width: 565px;
+            padding-left: 15px;
+            margin-top: 16px;
+            flex-grow: 1;
+        }
+
+        .review3 div a img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../index_customer.html">ホーム</a></li>
+                <li><a>メニュー</a></li>
+                <li><a href="yoyaku.html">予約</a></li>
+                <li style="font-size: 17px; padding-top: 5px;"><a href="calendar.html">CALENDAR</a></li>
+            </ul>
+        </nav>
+        <div>
+            <a id="btnLogin" href="login.html" style="margin-right: 15px;" target="_blank">
+                <span class="material-symbols-outlined">login</span>
+            </a>
+            <p>日本酒・おでん　陽</p>
+            <p id="welcome"></p>
+        </div>
+    </header>
+    <div style="padding-top: 65px;">
+        <img src="https://nori-net.jp/blog/wp-content/uploads/2023/10/IMG_5078.jpg" alt=""
+            style="height: 700px; position: absolute;">
+        <div class="overlay">
+            <div class="review1">
+                <h1>陽こそ❤︎</h1>
+                <p>
+                    ゆっくりとした晩酌から<br>
+                    わいわい騒ぎたい飲み会まで<br>
+                    木目を基調とした純和風なお店で<br>
+                    ご納得いただける味・雰囲気・価格をご提供いたします。<br>
+                    <br>
+                    どうぞごゆっくりご覧ください。
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="menuName">
+            <ul>
+                <li><button type="button" class="category-button" data-category="products1">おでん</button></li>
+                <li><button type="button" class="category-button" data-category="products2">揚げ出しおでん</button></li>
+                <li><button type="button" class="category-button" data-category="products3">一品</button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="product">
+        <div id="danhMuc" class="menuProduct"></div>
+        <div class="pages">
+            <ul class="list-page"></ul>
+        </div>
+    </div>
+    <footer>
+        <h2>ご案内</h2>
+        <div>
+            <p>
+                営業日・営業時間<br>
+                テイクアウト※事前にお電話ください<br>
+                日曜日 12:00〜<br>
+                月曜日〜土曜日 16:00〜<br>
+                ご飲食<br>
+                月曜日から土曜日 17:00〜23:00（L.o.22:30）<br>
+                日曜日 12:00〜21:00（L.o.20:30）<br>
+                <br>
+                不定休となり、そのほかに年末年始、夏休みを頂戴することがございます。詳細はInstagramや公式LINEにてご確認のほどよろしくお願いいたします。<br>
+
+            </p>
+            <a href="https://instagram.com/odenya_yoo/" target="_blank"><img src="../style/insta.jpg" alt=""></a>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var homeLink = document.querySelector('nav ul li:first-child');
+            homeLink.addEventListener('click', function (event) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Cuộn mượt nếu trình duyệt hỗ trợ
+                });
+            });
+        });
+        function checkLogin() {
+            let isLogin = localStorage.getItem("idUser");
+            if (isLogin) {
+                document.getElementById("btnLogin").style.display = "none";
+                document.getElementById("welcome").style.display = "block";
+                let user = JSON.parse(localStorage.getItem("users"));
+                let userName = user.find((item) => {
+                    return item.id == isLogin
+                });
+                document.getElementById("welcome").innerHTML = 
+                    `<span class="material-symbols-outlined" onclick="toggleLogin()">logout</span>　ようこそ ${userName.id} 様`;
+                document.querySelector("header div").style.flexDirection = "column";
+            } else {document.getElementById("welcome").style.display = "none";}
+        }
+        checkLogin();
+        function toggleLogin() {
+            let isLogin = localStorage.getItem("idUser");
+            if (isLogin) {
+                localStorage.removeItem("idUser");
+                document.getElementById("btnLogin").style.display = "block";
+                document.getElementById("welcome").style.display = "none";
+                document.querySelector("header div").style.flexDirection = "row";
+            }
+        }
+        const checkYoyaku = document.querySelectorAll('li a[href="yoyaku.html"]');
+        checkYoyaku.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                let isLogin = localStorage.getItem("idUser");
+                if (!isLogin) {
+                    const isConfirmed = confirm("まだアカウントにログインしていません。ログインページに移動しますか？");
+                    if (isConfirmed) {
+                        window.location.href = 'login.html';
+                    }
+                } else {window.location.href = 'yoyaku.html';}
+            });
+        });
+        let nextId = 1;
+        function newId() {
+            return nextId++;
+        }
+
+        let products1 = [
+            {
+                id: newId(),
+                name: "蘭王たまご",
+                price: 180,
+                image: "https://image.live.kufu.co.jp/store/article/77194/header_image/large-61192daa601d4070c2f43c1828ebd0a7.jpeg",
+            },
+            {
+                id: newId(),
+                name: "厚揚げ",
+                price: 120,
+                image: "https://i0.wp.com/tateba-toufu.com/wp-content/uploads/2013/09/age110.png?fit=400%2C400&ssl=1",
+            },
+            {
+                id: newId(),
+                name: "エリンギ",
+                price: 180,
+                image: "https://illustkun.com/wp-content/uploads/illustkun-04926-eringi.png",
+            },
+            {
+                id: newId(),
+                name: "ごぼうてん",
+                price: 150,
+                image: "https://img02.shop-pro.jp/PA01130/637/product/30327542.png?20130315173541",
+            },
+            {
+                id: newId(),
+                name: "こんにゃく",
+                price: 120,
+                image: "https://miyukiya.jp/assets/img/business/standard/sankaku.png",
+            },
+            {
+                id: newId(),
+                name: "しらたき",
+                price: 120,
+                image: "https://www.lawson.co.jp/recommend/original/detail/img/l436967_1.png",
+            },
+            {
+                id: newId(),
+                name: "ソーセージ",
+                price: 120,
+                image: "https://img1.kakaku.k-img.com/images/maga/icv/sp828/11426/27.jpg",
+            },
+            {
+                id: newId(),
+                name: "だいこん",
+                price: 180,
+                image: "https://cdn.r-corona.jp/prd.rb.r-corona.jp/assets/site_files/6x4yh1go/11615452/sq7k_w690h690.jpg",
+            },
+            {
+                id: newId(),
+                name: "ちくわ",
+                price: 120,
+                image: "https://tsukatte.com/wp-content/uploads/2019/10/chikuwa.png",
+            },
+            {
+                id: newId(),
+                name: "つみれ",
+                price: 180,
+                image: "https://upload.wikimedia.org/wikipedia/commons/7/72/%E3%81%A4%E3%81%BF%E3%82%8C.jpg",
+            },
+            {
+                id: newId(),
+                name: "はんぺん",
+                price: 120,
+                image: "https://taberugo.net/wp-content/uploads/2020/07/Fish-cake-700x466.jpg",
+            },
+            {
+                id: newId(),
+                name: "もちきんちゃく",
+                price: 180,
+                image: "https://odendane.com/wp-content/uploads/oden-mochikinchaku16.jpg",
+            },
+            {
+                id: newId(),
+                name: "焼き豆腐とろろ添え",
+                price: 200,
+                image: "https://emunodinner.com/wp-content/uploads/2018/02/P1210394-1024x768.jpg",
+            },
+            {
+                id: newId(),
+                name: "春菊ベーコン巻き",
+                price: 250,
+                image: "https://img.cpcdn.com/recipes/3505346/750x750cq60/4f0374efe08670c35ca17477ef5e31fc?p=1446990672",
+            },
+            {
+                id: newId(),
+                name: "しゅうまい（3個）",
+                price: 300,
+                image: "https://illust8.com/wp-content/uploads/2021/10/shumai_15072.png",
+            },
+            {
+                id: newId(),
+                name: "レタスwithたらこ",
+                price: 330,
+                image: "https://www.lettuceclub.net/i/R1/img/dish/1/S20180525046006A_000.jpg",
+            },
+            {
+                id: newId(),
+                name: "牛すじ（国産）",
+                price: 330,
+                image: "https://www.lawson.co.jp/recommend/original/detail/img/l436956_1.png",
+            },
+            {
+                id: newId(),
+                name: "おでん盛り（5品）",
+                price: 500,
+                image: "https://shop.yasohachi.co.jp/cdn/shop/products/P1139662.jpg?v=1663707520",
+            },
+        ]
+        products1 = products1.map(product => ({
+            danhMuc: "おでん",
+            ...product
+        }));
+        let products2 = [
+            {
+                id: newId(),
+                name: "厚揚げ",
+                price: 300,
+                image: "https://tenjinya.com/wp/wp-content/uploads/2020/10/6c9cd38dcf6ee5b1dc4e68a8782b8257.jpg",
+            },
+            {
+                id: newId(),
+                name: "こんにゃく",
+                price: 300,
+                image: "https://api.tousekisyoku.com/storage/uploads/recipe/91ec6567-268c-429b-a453-d70faee998ef/arJgBlDz3KsZbFXpZPgxifh3QlULP1IonolZ0VJm.jpg",
+            },
+            {
+                id: newId(),
+                name: "ごぼうてん",
+                price: 300,
+                image: "https://www.agemonodo.com/html/upload/save_image/0319161453_60544f6d60174.png",
+            },
+            {
+                id: newId(),
+                name: "だいこん",
+                price: 400,
+                image: "https://production-orp.s3.amazonaws.com/uploads/recipes/image/0000302172/20200205152826_w300hf.jpg",
+            },
+            {
+                id: newId(),
+                name: "ちくわ",
+                price: 300,
+                image: "https://asset.oceans-nadia.com/upload/save_image/3b/3b0af238d23b82d5bdc3d8c6427e2e50.jpeg",
+            },
+        ]
+        products2 = products2.map(product => ({
+            danhMuc: "揚げ出しおでん",
+            ...product
+        }));
+        let products3 = [
+            {
+                id: newId(),
+                name: "おつけもの",
+                price: 300,
+                image: "https://tbsradio.g.kuroco-img.app/v=1633273953/files/topics/45231_ext_04_0.png?width=640",
+            },
+            {
+                id: newId(),
+                name: "もやしナムル",
+                price: 300,
+                image: "https://7premium.jp/files/recipe/2125/4902402871478_001.jpg",
+            },
+            {
+                id: newId(),
+                name: "きんぴら",
+                price: 300,
+                image: "https://img.oishi-kenko.com/images/healthcare_recipes/w=768,h=768,c=true/10223.jpg?2023-04-18%2015:06:28%20+0900",
+            },
+            {
+                id: newId(),
+                name: "ポテトサラダ",
+                price: 380,
+                image: "https://cdn.sbfoods.co.jp/recipes/08643_l.jpg",
+            },
+            {
+                id: newId(),
+                name: "特選キムチ",
+                price: 300,
+                image: "https://tshop.r10s.jp/hanryukan-shop/cabinet/01760078/0002.jpg?fitin=720%3A720",
+            },
+            {
+                id: newId(),
+                name: "くりぃむちーず",
+                price: 400,
+                image: "https://img.cpcdn.com/recipes/973597/750x500cq60/31304a161e7ee819e03bb6371829ac10?p=1259562088",
+            },
+            {
+                id: newId(),
+                name: "蘭王たまごのだし巻き",
+                price: 450,
+                image: "https://illustcenter.com/wp-content/uploads/2022/01/rdesign_10860.png",
+            },
+            {
+                id: newId(),
+                name: "餃子（5個）",
+                price: 450,
+                image: "https://booth.pximg.net/c988b570-649d-4103-8be3-5d709322641e/i/4844948/c67d8d8f-3988-4948-b29c-2d242851bf13_base_resized.jpg",
+            },
+        ]
+        products3 = products3.map(product => ({
+            danhMuc: "一品",
+            ...product
+        }));
+        let allProduct = [...products1, ...products2, ...products3];
+        localStorage.setItem("allProduct", JSON.stringify(allProduct));
+        const products = { products1, products2, products3 };
+        let itemPage = 8;
+        let start, end;
+
+        function startEnd(current) {
+            start = (current - 1) * itemPage;
+            end = current * itemPage;
+        }
+        function showProduct(category, page) {
+            startEnd(page);
+
+            let text = '';
+            for (let i = start; i < Math.min(end, products[category].length); i++) {
+                text += `
+                    <div class="product-card">
+                        <div class="showcase-box">
+                            <img src="${products[category][i].image}" alt="">
+                            <span class="price">${products[category][i].price}¥</span>
+                        </div>
+                        <p class="productName">${products[category][i].name}</p>
+                        <p onclick="addToCart(${products[category][i].id})" class="itemCart">予約</p>
+                    </div>
+                    `;
+            }
+            document.getElementById('danhMuc').innerHTML = text;
+        }
+
+        function showListPage(category, totalPage, currentPage) {
+            document.querySelector('.list-page').innerHTML = '';
+            if (totalPage <= 1) {
+                return;
+            }
+
+            const leftArrow = createArrow('arrow_back_ios', function () {
+                currentPage = Math.max(currentPage - 1, 1);
+                choosePage(currentPage);
+                showProduct(category, currentPage);
+            });
+            document.getElementsByClassName('list-page')[0].appendChild(leftArrow);
+            for (let i = 1; i <= totalPage; i++) {
+                const pageLink = createPageLink(i, function () {
+                    choosePage(i);
+                    showProduct(category, i);
+                });
+                document.getElementsByClassName('list-page')[0].appendChild(pageLink);
+            }
+            document.getElementsByClassName("page-item")[0].classList.add("page");
+
+            const rightArrow = createArrow('arrow_forward_ios', function () {
+                currentPage = Math.min(currentPage + 1, totalPage);
+                choosePage(currentPage);
+                showProduct(category, currentPage);
+            });
+            document.getElementsByClassName('list-page')[0].appendChild(rightArrow);
+        }
+        function createArrow(content, onClick) {
+            const pageLink = document.createElement('span');
+            pageLink.className = 'material-symbols-outlined';
+            pageLink.innerHTML = content;
+            pageLink.addEventListener('click', onClick);
+            return pageLink;
+        }
+        function createPageLink(content, onClick) {
+            const pageLink = document.createElement('li');
+            pageLink.className = 'page-item';
+            pageLink.innerHTML = content;
+            pageLink.addEventListener('click', onClick);
+            return pageLink;
+        }
+        function choosePage(a) {
+            let pageItem = document.getElementsByClassName("page-item");
+            currentPage = a;
+            for (let i = 0; i < pageItem.length; i++) {
+                if (i == a - 1) {
+                    pageItem[i].classList.add("page");
+                } else {
+                    pageItem[i].classList.remove("page");
+                }
+            }
+        }
+
+        function showCategory(category) {
+            const totalPage = Math.ceil(products[category].length / itemPage);
+            showProduct(category, 1);
+            showListPage(category, totalPage, 1);
+        }
+
+        const categoryButtons = document.querySelectorAll('.category-button');
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const category = this.getAttribute('data-category');
+                showCategory(category);
+            });
+        });
+        showCategory('products1');
+
+        function addToCart(idProduct) {
+            let isLogin = localStorage.getItem("idUser");
+            let addSp = JSON.parse(localStorage.getItem("userobj")) || [];
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let allProducts = JSON.parse(localStorage.getItem("allProduct")) || [];
+
+            if (!isLogin) {
+                const isConfirmed = confirm("まだアカウントにログインしていません。ログインページに移動しますか？");
+                if (isConfirmed) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }
+            for (let i = 0; i < addSp.length; i++) {
+                if (addSp[i].id == isLogin) {
+                    console.log("ok");
+                    for (let j = 0; j < allProducts.length; j++) {
+                        if (allProducts[j].id == idProduct) {
+                            console.log(allProducts[j].id);
+                            let check = true;
+                            let result;
+                            for (let k = 0; k < addSp[i].cart.length; k++) {
+                                if (addSp[i].cart[k].id == idProduct) {
+                                    check = false;
+                                    result = k;
+                                    break;
+                                }
+                            }
+                            if (!check) {
+                                addSp[i].cart[result].soLuong = ++addSp[i].cart[result].soLuong;
+                                localStorage.setItem("userobj", JSON.stringify(addSp));
+                            } else {
+                                addSp[i].cart.push({ ...allProducts[j], soLuong: 1 });
+                                localStorage.setItem("userobj", JSON.stringify(addSp));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

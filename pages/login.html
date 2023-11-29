@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../style/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMgNvbcoMH7I30qPZMsWM6ZfcCNDNIRcUs-W2zR=s1360-w1360-h1020"
+                alt="Image 1" class="active">
+            <img src="https://lh3.googleusercontent.com/p/AF1QipMsY8dmppqEj5fDWvKZ8QCh7ACW0EAJL4c3m_6w=s1360-w1360-h1020"
+                alt="Image 2">
+            <img src="https://tblg.k-img.com/restaurant/images/Rvw/188785/640x640_rect_ffdfe52abf3766b192cbbb77bc30cb08.jpg"
+                alt="Image 3">
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+        <div class="loginForm">
+            <div class="login-box">
+                <form action="#" method="post">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="button" onclick=login()>Sign Up</button>
+                    <a href="register.html">Don't have an account?</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var images = document.querySelectorAll('.image-container img');
+        var dots = document.querySelectorAll('.dot');
+
+        // Hiển thị ảnh đầu tiên và chấm tương ứng
+        var currentIndex = 0;
+        images[currentIndex].classList.add('active');
+        dots[currentIndex].classList.add('active');
+
+        function changeImage() {
+            // Ẩn ảnh và chấm hiện tại
+            images[currentIndex].classList.remove('active');
+            dots[currentIndex].classList.remove('active');
+
+            // Chuyển sang ảnh và chấm mới
+            currentIndex = (currentIndex + 1) % images.length;
+
+            // Hiển thị ảnh và chấm mới
+            images[currentIndex].classList.add('active');
+            dots[currentIndex].classList.add('active');
+        }
+        setInterval(changeImage, 5000);
+
+        function login() {
+            let users = [
+                { id: "odenya", password: "yoo", role: "admin" },
+            ];
+
+            let id = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].id === id && users[i].password === password) {
+                    localStorage.setItem("userRole", users[i].role);
+                    if (users[i].role === "admin") {
+                        window.location.href = "../index_admin.html";
+                    } else {
+                        window.location.href = "../index_customer.html";
+                    }
+                    return;
+                }
+            }
+            alert("ユーザー名またはパスワードが無効です。");
+        }
+    </script>
+</body>
+</html>
+

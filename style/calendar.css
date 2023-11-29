@@ -1,0 +1,280 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {background-color: #669BBC;}
+a {
+    text-decoration: none;
+    color: black;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color: black;
+    font-size: 18px;
+    width: 100%;
+    height: 64px;
+    padding: 20px;
+}
+footer {
+    background-color: rgb(51, 51, 51);
+    margin: 0 auto;
+    padding: 60px;
+    color: #e6e7f0;
+}
+footer h2 {
+    font-size: 48px;
+    padding: 20px 0;
+    margin-left: 50px;
+}
+footer div {
+    border-top: 1px solid #e6e7f0;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0;
+    margin-left: 50px;
+}
+footer div p {
+    width: 565px;
+    padding-left: 15px;
+    margin-top: 16px;
+    flex-grow: 1;
+}
+footer div a {
+    width: 565px;
+    padding-left: 15px;
+    margin-top: 16px;
+    flex-grow: 1;
+}
+
+.calendar {
+    position: relative;
+    margin: auto;
+    width: 50vw;
+    height: 50vw;
+}
+.base {
+    width: 70%;
+    height: 45%;
+    border-radius: 2vw;
+    box-shadow: 0.2vw 0.2vw 1vw 0 rgba(0, 0, 0, 0.27);
+    overflow: hidden;
+}
+.base.top {
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    background-color: #29335C;
+}
+.base.top .holes {
+    position: absolute;
+    top: 88%;
+}
+.base.bottom {
+    position: absolute;
+    top: 51%;
+    left: 15%;
+    background-color: #fff;
+}
+.base.bottom .holes {
+    position: absolute;
+    top: 4%;
+}
+.base.bottom::before {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 28%;
+    background-color: #29335C;
+}
+.holes {
+    width: 128.57143%;
+    height: 200%;
+    pointer-events: none; /*chặn sự kiện click từ việc lan truyền đến các phần tử bên dưới*/
+}
+.holes .hole {
+    background-color: #669BBC;
+    width: 4%;
+    height: 4%;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 3.8vw;
+    box-shadow: inset 0.2vw 0.2vw 1vw 0 rgba(0, 0, 0, 0.27);
+}
+.rings {
+    width: 70%;
+    height: 10%;
+    position: absolute;
+    top: 45.5%;
+    left: 99.6px;
+}
+.rings .ring {
+    width: 3.5%;
+    height: 100%;
+    display: inline-block;
+    background-color: white;
+    margin-left: 61.5px;
+    border-radius: 70% / 10%;
+    box-shadow: 0.3vw 0 0.5vw -0.2vw rgba(0, 0, 0, 0.27);
+}
+.year-side {
+    background-color: #F3A712;
+    width: 20%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+.year-side::after {
+    content: var(--year-content);
+    display: block;
+    color: #29335C;
+    font-family: Roboto, sans-serif;
+    font-size: 5vw;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 35%;
+    left: -30%;
+}
+.month-side {
+    width: 80%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 20%;
+}
+.month-side::after {
+    content: var(--month-content);
+    display: block;
+    color: #F3A712;
+    font-family: Roboto, sans-serif;
+    font-size: 5vw;
+    position: absolute;
+    top: 35%;
+    left: 25%;
+}
+
+.day {cursor: pointer;}
+.selected {
+    border: 2px solid #F3A712;
+    border-radius: 50%;
+}
+.days {
+    width: 90%;
+    height: 75%;
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    display: grid;
+    grid-template: repeat(6, 1fr)/repeat(7, 1fr);
+    grid-gap: 0.2vw;
+}
+.days div {
+    text-align: center;
+    padding-top: 20%;
+    font-family: Roboto, sans-serif;
+    font-size: 1.5vw;
+    color: #29335C;
+}
+.days>div.old {
+    color: #999;
+}
+.days>div.weekday {
+    font-weight: bold;
+    color: #F3A712;
+    padding-top: 3px;
+}
+
+section {
+    line-height: 1.5;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: rgb(33, 37, 41);
+    vertical-align: middle;
+    font-family: sans-serif;
+    padding: 30px;
+}
+input {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1vh;
+    outline: none;
+    width: 50%;
+    margin-bottom: 10px;
+}
+.button {
+    cursor: pointer;
+    background-color: #F3A712;
+    border: 1px solid #F3A712;
+    color: white;
+    width: 50%;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    padding: 5.7px;
+}
+
+.button-55 {
+    margin-bottom: 50px;
+    margin-left: 420px;
+    align-self: center;
+    background-color: #fff;
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #41403e;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    touch-action: manipulation;
+}
+.button-55:hover {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+}
+.button-55:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+.button-62 {
+    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+    border: 0;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 2.5;
+    outline: transparent;
+    padding: 0 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    touch-action: manipulation;
+    white-space: nowrap;
+    margin-top: 15px;
+    margin-left: 1250px;
+}
+.button-62:not([disabled]):focus {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+.button-62:not([disabled]):hover {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}

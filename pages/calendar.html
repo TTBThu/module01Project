@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/calendar.css">
+</head>
+
+<body>
+    <header>
+        <div>日本酒・おでん　陽</div>
+        <div id="welcome"></div>
+    </header>
+    <button class="button-62">予約</button>
+    <div class="calendar">
+        <div class="base top">
+            <div class="year-side" id="yearSide"></div>
+            <div class="month-side" id="monthSide"></div>
+            <div class="holes">
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+            </div>
+        </div>
+        <div class="base bottom">
+            <div class="days" id="showDay">
+            </div>
+            <div class="holes">
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+            </div>
+        </div>
+        <div class="rings">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+    </div>
+    <button id="prevMonth" class="button-55">先月</button>
+    <button id="nextMonth" class="button-55">来月</button>
+    <br>
+    <section id="formYoyaku">
+        <label for="firstName">FIRST NAME</label><br>
+        <input type="text" id="firstName" name="firstName" required><br>
+        <label for="lastName">LAST NAME</label><br>
+        <input type="text" id="lastName" name="lastName" required><br>
+        <label for="phoneNumber">電話番号</label><br>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+        <button class="button" onclick="xacNhan()">予約</button>
+        <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+        <button onclick="searchProduct()">Tìm kiếm</button>
+        <div id="showResult"></div>
+    </section>
+    <footer>
+        <h2>ご案内</h2>
+        <div>
+            <p>
+                営業日・営業時間<br>
+                テイクアウト※事前にお電話ください<br>
+                日曜日 12:00〜<br>
+                月曜日〜土曜日 16:00〜<br>
+                ご飲食<br>
+                月曜日から土曜日 17:00〜23:00（L.o.22:30）<br>
+                日曜日 12:00〜21:00（L.o.20:30）<br>
+                <br>
+                不定休となり、そのほかに年末年始、夏休みを頂戴することがございます。詳細はInstagramや公式LINEにてご確認のほどよろしくお願いいたします。<br>
+
+            </p>
+            <a href="https://instagram.com/odenya_yoo/" target="_blank"><img src="style/insta.jpg" alt=""></a>
+        </div>
+    </footer>
+    <div style="text-align: center; padding-top: 80px; background-color: white;">
+        <p>場所</p>
+        <p style="font-size: 16px; margin-top: 20px; margin-bottom: 40px;">
+            〒545-0037 大阪市阿倍野区帝塚山1−14−13<br>
+            ℡ 06−6606−8393 <br>
+            代表：金子 洋亮<br>
+            -最寄駅-<br>
+            南海高野線「帝塚山駅」徒歩7分<br>
+            阪堺電気軌道上町線「姫松駅」徒歩3分<br>
+        </p>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.179269139087!2d135.49711077579005!3d34.62490977294677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000dd77226b0173%3A0xe3416192c2983ebe!2z6Zm9!5e0!3m2!1svi!2sjp!4v1700207058249!5m2!1svi!2sjp"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <script>
+        let checkLogin = localStorage.getItem("idUser");
+        let userRole = localStorage.getItem("userRole");
+        let userName = JSON.parse(localStorage.getItem("userobj")) || [];
+        document.getElementById("welcome").innerHTML =
+            `ようこそ ${checkLogin} 様`;
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const month = document.getElementById('monthSide');
+        const year = document.getElementById('yearSide');
+        const calendar = document.getElementById("showDay");
+        const prevMonthButton = document.getElementById("prevMonth");
+        const nextMonthButton = document.getElementById("nextMonth");
+        let currentDisplayedDate = new Date();
+        let selectedDate = null;
+
+        if (userRole === "admin") {
+            document.querySelector('.button-62').style.display = 'none';
+            document.getElementById("formYoyaku").style.display = "block";
+            document.querySelector('footer').style.display = 'none';
+        } else {
+            document.querySelector('.button-62').style.display = 'block';
+            document.getElementById("formYoyaku").style.display = "none";
+        }
+        function generateCalendar() {
+            const currentDate = new Date();
+            const firstDayOfMonth = new Date(currentDisplayedDate.getFullYear(), currentDisplayedDate.getMonth(), 1);
+            const daysInMonth = new Date(currentDisplayedDate.getFullYear(), currentDisplayedDate.getMonth() + 1, 0).getDate();
+
+            // Hiển thị thông tin tháng và năm
+            const currentMonth = currentDisplayedDate.toLocaleString('en-us', { month: 'short' }).toUpperCase();
+            const currentYear = currentDisplayedDate.getFullYear();
+            month.style.setProperty('--month-content', `'${currentMonth}'`);
+            year.style.setProperty('--year-content', `'${currentYear}'`);
+
+            calendar.innerHTML = ''; // Xóa các ngày cũ trong lịch
+
+            // Hiển thị tên thứ
+            const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
+            for (let i = 0; i < dayNames.length; i++) {
+                const dayOfWeekElement = document.createElement("div");
+                dayOfWeekElement.classList.add("weekday");
+                dayOfWeekElement.textContent = dayNames[i];
+                calendar.appendChild(dayOfWeekElement);
+            }
+
+            // Thêm ô trống cho các ngày trước ngày đầu tiên của tháng
+            for (let i = firstDayOfMonth.getDay(); i > 0; i--) {
+                const emptyDayElement = document.createElement("div");
+                emptyDayElement.classList.add("old");
+                emptyDayElement.textContent = new Date(currentDisplayedDate.getFullYear(), currentDisplayedDate.getMonth(), 0 - i + 1).getDate();
+                calendar.appendChild(emptyDayElement);
+            }
+            // Hiển thị các ngày trong tháng
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayElement = document.createElement("div");
+                dayElement.classList.add("day");
+                dayElement.textContent = i;
+                dayElement.addEventListener("click", function () {
+                    if (selectedDate) {
+                        selectedDate.classList.remove("selected");
+                    }
+                    selectedDate = dayElement;
+                    selectedDate.classList.add("selected");
+                });
+                calendar.appendChild(dayElement);
+            }
+            // Thêm ô trống cho các ngày sau ngày cuối cùng của tháng
+            const lastDayOfMonth = new Date(currentDisplayedDate.getFullYear(), currentDisplayedDate.getMonth(), daysInMonth);
+            for (let i = lastDayOfMonth.getDay() + 1; i < 7; i++) {
+                const emptyDayElement = document.createElement("div");
+                emptyDayElement.classList.add("old");
+                emptyDayElement.textContent = new Date(currentDisplayedDate.getFullYear(), currentDisplayedDate.getMonth() + 1, i - lastDayOfMonth.getDay()).getDate();
+                calendar.appendChild(emptyDayElement);
+            }
+        }
+        function showPreviousMonth() {
+            const currentMonth = currentDisplayedDate.getMonth();
+            const currentYear = currentDisplayedDate.getFullYear();
+            if (currentYear > new Date().getFullYear() || (currentYear === new Date().getFullYear() && currentMonth > new Date().getMonth())) {
+                currentDisplayedDate.setMonth(currentMonth - 1);
+                generateCalendar();
+            }
+        }
+        function showNextMonth() {
+            currentDisplayedDate.setMonth(currentDisplayedDate.getMonth() + 1);
+            generateCalendar();
+        }
+        generateCalendar();
+        prevMonthButton.addEventListener("click", showPreviousMonth);
+        nextMonthButton.addEventListener("click", showNextMonth);
+
+        function searchProduct() {
+            var searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            var productIdsToSearch = searchTerm.split(',');
+            var products = JSON.parse(localStorage.getItem('allProduct')) || [];
+            var searchResults = products.filter(function (product) {
+                return productIdsToSearch.includes(String(product.id));
+            });
+            displaySearchResults(searchResults);
+        }
+        function displaySearchResults(results) {
+            var resultContainer = document.getElementById("showResult");
+            resultContainer.innerHTML = "";
+
+            if (results.length === 0) {
+                resultContainer.innerHTML = "Không tìm thấy sản phẩm nào.";
+            } else {
+                var ul = document.createElement("ul");
+                results.forEach(function (product) {
+                    var li = document.createElement("li");
+                    li.classList.add(product.id);
+                    li.textContent = product.name;
+                    ul.appendChild(li);
+                });
+                resultContainer.appendChild(ul);
+            }
+        }
+
+        const reservationButton1 = document.querySelector('.button-62');
+        reservationButton1.addEventListener('click', () => {
+            if (checkLogin) {
+                let selectedDateValue = selectedDate ? selectedDate.textContent : '';
+                let selectedMonth = selectedDate ? currentDisplayedDate.getMonth() + 1 : '';
+                let selectedYear = selectedDate ? currentDisplayedDate.getFullYear() : '';
+                window.location.href = `yoyaku.html?Date=${selectedDateValue}&Month=${selectedMonth}&Year=${selectedYear}`;
+            } else {
+                const isConfirmed = confirm("まだアカウントにログインしていません。ログインページに移動しますか？");
+                if (isConfirmed) {
+                    window.location.href = 'login.html';
+                }
+            }
+        });
+        function uuid() {
+            return Math.floor(Math.random()*885688785522+new Date().getMilliseconds());
+        }
+        function xacNhan() {
+            let firstName = document.getElementById("firstName").value;
+            let lastName = document.getElementById("lastName").value;
+            let phone = document.getElementById("phoneNumber").value;
+
+            let product = JSON.parse(localStorage.getItem("allProduct")) || [];
+            let newUser = {
+                id: uuid(),
+                yoyaku: [],
+                cart: []
+            }
+            userName.push(newUser);
+            localStorage.setItem("userobj",JSON.stringify(userName));
+            let newId = userName.find(user => user.id === newUser.id);
+            for (let j = 0; j < product.length; j++) {
+                let liElements = document.querySelectorAll("#showResult li");
+                liElements.forEach(function (li) {
+                    if (product[j].id == li.classList.value) {
+                        newId.cart.push({ ...product[j], soLuong: 1 });
+                        localStorage.setItem("userobj", JSON.stringify(userName));
+                    }
+                });
+            }
+            if (selectedDate) {
+                let selectedDay = selectedDate.textContent;
+                let selectedMonth = currentDisplayedDate.getMonth()+1;
+                let selectedYear = currentDisplayedDate.getFullYear();
+                let newReservation = {
+                    name: firstName + lastName,
+                    phone: phone,
+                    date: selectedYear+"-"+selectedMonth+"-"+selectedDay,
+                    items: newId.cart
+                }
+                newId.yoyaku.push(newReservation);
+                newId.cart = [];
+                localStorage.setItem("userobj", JSON.stringify(userName));
+            } else {console.log("No date selected.");}
+            window.location.href = "../index_admin.html";
+        }
+    </script>
+</body>
+
+</html>
